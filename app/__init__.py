@@ -1,6 +1,6 @@
 from flask import Flask
 from os import getenv
-from app.configs import database, migrations, auth, cors
+from app.configs import database, migration, auth, cors
 from app import routes
 
 
@@ -15,7 +15,7 @@ def create_app():
 
     cors.init_app(app)
     database.init_app(app)
-    migrations.init_app(app)
+    migration.init_app(app)
     auth.init_app(app)
     routes.init_app(app)
 
