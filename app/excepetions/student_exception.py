@@ -1,12 +1,15 @@
 class InvalidKeyStudentError(Exception):
     def __init__(self, **kwargs):
         for key in kwargs.keys():
-            if key != 'full_name' or key != 'age' or key != 'phone':
+            if key != 'name' or key != 'last_name' or key != 'age' or key != 'grade' or key != 'email' or key != 'password':
                 self.message = {
                     'available_keys': [
-                    'full_name',
+                    'name',
+                    'last_name',
                     'age',
-                    'phone'
+                    'grade',
+                    'email',
+                    'password'
                     ]
                 }
         super().__init__(self.message)
@@ -24,27 +27,54 @@ class InvalidTypeStudentError(Exception):
     }
     
     
-    def __init__(self, full_name: str, age: int, phone: str) -> None:
+    def __init__(self, name: str, last_name: str, age: int, grade: str, email: str, password: str) -> None:
 
-        keys = [full_name, phone]
+        keys = [name, last_name, grade, email, password]
         for key in keys:
             if type(key) != str:
-                if key == full_name:
+                if key == name:
                     self.message = {
                         'available field': {
-                            'full_name': 'string'
+                            'name': 'string'
                         },
                         'field sent': {
-                            'full_name': f'{self.types[type(full_name)]}'
+                            'name': f'{self.types[type(name)]}'
                         }
                     }
-                elif key == phone:
+                elif key == last_name:
                     self.message = {
                         'available field': {
-                            'phone': 'string'
+                            'last_name': 'string'
                         },
                         'field sent': {
-                            'phone': f'{self.types[type(phone)]}'
+                            'last_name': f'{self.types[type(last_name)]}'
+                        }
+                    }
+                elif key == grade:
+                    self.message = {
+                        'available field': {
+                            'grade': 'string'
+                        },
+                        'field sent': {
+                            'grade': f'{self.types[type(grade)]}'
+                        }
+                    }
+                elif key == email:
+                    self.message = {
+                        'available field': {
+                            'email': 'string'
+                        },
+                        'field sent': {
+                            'email': f'{self.types[type(email)]}'
+                        }
+                    }
+                elif key == password:
+                    self.message = {
+                        'available field': {
+                            'password': 'string'
+                        },
+                        'field sent': {
+                            'password': f'{self.types[type(password)]}'
                         }
                     }
 

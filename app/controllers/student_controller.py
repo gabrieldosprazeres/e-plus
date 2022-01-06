@@ -1,5 +1,5 @@
 from flask import request, jsonify, current_app
-from app.controllers import check_key_for_student, check_phone, check_type_for_student
+from app.controllers import check_key_for_student, check_type_for_student
 from app.excepetions import PhoneAlreadyExistsError
 from app.excepetions.student_exception import InvalidKeyStudentError, InvalidTypeStudentError
 from app.models.student_model import StudentModel
@@ -17,9 +17,14 @@ def registering_student():
 
     try:
         check_key_for_student(data)
-        check_phone(data, StudentModel)
+        # check_phone(data, StudentModel)
         check_type_for_student(data)
+        
+        password_to_hash = data.pop("password")
+
         student = StudentModel(**data)
+        
+        student.password = password_to_hash
 
         current_app.db.session.add(student)
         current_app.db.session.commit()
