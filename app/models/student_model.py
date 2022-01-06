@@ -1,22 +1,39 @@
 from app.configs.database import db
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String
 from dataclasses import dataclass
-from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 @dataclass
 class StudentModel(db.Model):
 
     id: int
-    full_name: str
+    name: str
+    last_name: str
     age: int
-    phone: str
-    created_at: str
+    grade: str
+    email: str
 
     __tablename__ = 'students'
 
     id = Column(Integer, primary_key=True)
-    full_name = Column(String(100), nullable=False)
+    name = Column(String(50), nullable=False)
+    last_name = Column(String(100), nullable=False)
     age = Column(Integer, nullable=False)
-    phone = Column(String(14), unique=True, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow())
+    grade = Column(String(20), nullable=False)
+    email = Column(String(100), nullable=False, unique=True)
+    password_hash = Column(String(255), nullable=False)
+
+
+    @property
+    def password(self):
+        raise AttributeError('Password is not acessible.')
+
+
+    @password.setter
+    def password(self, password_to_hash):
+        self.password_hash = generate_password_hash(password_to_hash)
+
+
+    def check_password(self, password_to_compare):
+        return check_password_hash(self.password_hash, password_to_compare)

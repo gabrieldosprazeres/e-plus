@@ -2,7 +2,9 @@ from flask import Flask
 from os import getenv
 from app.configs import database, migration, auth, cors
 from app import routes
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def create_app():
 
