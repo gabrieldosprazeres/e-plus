@@ -1,7 +1,7 @@
 from flask import request, jsonify, current_app
+from app.models.subject_model import SubjectModel
 from app.controllers import check_key_for_subject, check_subject, check_type_for_subject
 from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError
-from app.models.subject_model import SubjectModel
 
 
 def get_subject_by_id(subject_id: int):

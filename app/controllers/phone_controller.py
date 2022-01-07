@@ -1,10 +1,10 @@
 from flask import request, jsonify, current_app
 from flask_jwt_extended import get_jwt_identity
-from app.controllers import check_and_deleting_phone, check_and_updating_phone, check_key_for_phone, check_phone_id, check_phone_pattern, check_type_for_phone
-from app.excepetions import PatternPhoneError
-from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePhoneError, InvalidAccessPhoneError, PhoneIdNotFoundError
 from app.models.phone_model import PhoneModel
 from app.models.student_model import StudentModel
+from app.excepetions import PatternPhoneError
+from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePhoneError, InvalidAccessPhoneError, PhoneIdNotFoundError
+from app.controllers import check_and_deleting_phone, check_and_updating_phone, check_key_for_phone, check_phone_id, check_phone_pattern, check_type_for_phone
 
 
 def creating_phone_number():

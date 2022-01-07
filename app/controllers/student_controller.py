@@ -1,11 +1,10 @@
 from flask import request, jsonify, current_app
 from flask_jwt_extended import get_jwt_identity
-from app.controllers import adding_address, check_email, check_email_pattern, check_key_for_address, check_key_for_student, check_key_for_updating, check_type_for_address, check_type_for_student, check_type_for_updating, format_address, updating_password
-from app.excepetions import EmailAlreadyExistsError, PatternEmailError
-from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingError, InvalidTypeUpdatingAddressError
 from app.models.address_model import AddressModel
 from app.models.student_model import StudentModel
-from app.models.student_subject_model import StudentSubjectModel
+from app.excepetions import EmailAlreadyExistsError, PatternEmailError
+from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingError, InvalidTypeUpdatingAddressError
+from app.controllers import adding_address, check_email, check_email_pattern, check_key_for_address, check_key_for_student, check_key_for_updating, check_type_for_address, check_type_for_student, check_type_for_updating, format_address, updating_password
 
 
 def get_all_students():

@@ -1,7 +1,7 @@
 class EmailAlreadyExistsError(Exception):
 
 
-    def __init__(self, email) -> None:
+    def __init__(self, email: str) -> None:
 
         self.message = {
             'message': f"email: '{email}' already exists"
@@ -11,7 +11,7 @@ class EmailAlreadyExistsError(Exception):
 
 
 class PatternEmailError(Exception):
-    def __init__(self, data: dict):
+    def __init__(self, data: dict) -> None:
         self.message = {
             'field sent': {
                 'email': f"{data.get('email')}",
@@ -23,7 +23,7 @@ class PatternEmailError(Exception):
 
 
 class PatternPhoneError(Exception):
-    def __init__(self, data: dict):
+    def __init__(self, data: dict) -> None:
         self.message = {
             'field sent': {
                 'phone_number': f"{data.get('phone_number')}",
