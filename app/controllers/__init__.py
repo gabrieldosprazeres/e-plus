@@ -1,4 +1,5 @@
 from flask import current_app
+from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePhoneError
 from app.models.address_model import AddressModel
 from app.excepetions import EmailAlreadyExistsError
 from app.excepetions.student_exception import InvalidKeyStudentError, InvalidTypeStudentError
@@ -70,3 +71,21 @@ def adding_address(address, student_id):
     current_app.db.session.add(adding_address)
 
     current_app.db.session.commit()
+
+
+def check_key_for_phone(data: dict):
+    
+    keys = ['name', 'phone_number']
+    
+    for key in data.keys():
+        if not key in keys or len(data) < 2:
+            raise InvalidKeyPhoneError(**data)
+
+
+def check_type_for_phone(data: dict):
+    
+    name = data.get('name')
+    phone_number = data.get('phone_number')
+    
+    if type(name) != str or type(phone_number) != str:
+        raise InvalidTypePhoneError(**data)
