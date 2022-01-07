@@ -1,4 +1,5 @@
 from flask import current_app
+from app.excepetions.login_exception import IncorrectPasswordError, InvalidKeyLoginError, InvalidTypeLoginError, EmailNotFoundError
 from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError
 from app.models.address_model import AddressModel
 from app.models.subject_model import SubjectModel
@@ -6,6 +7,8 @@ from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePho
 from app.excepetions import EmailAlreadyExistsError
 from app.excepetions.student_exception import InvalidKeyStudentError, InvalidTypeStudentError
 
+
+# Student Functions
 
 def check_key_for_student(data: dict):
     
@@ -75,6 +78,8 @@ def adding_address(address, student_id):
     current_app.db.session.commit()
 
 
+# Phone Functions
+
 def check_key_for_phone(data: dict):
     
     keys = ['name', 'phone_number']
@@ -92,6 +97,8 @@ def check_type_for_phone(data: dict):
     if type(name) != str or type(phone_number) != str:
         raise InvalidTypePhoneError(**data)
 
+
+# Subject Functions
 
 def check_subject(data: dict):
 
@@ -113,3 +120,35 @@ def check_type_for_subject(data: dict):
     
     if type(subject) != str:
         raise InvalidTypeSubjectError(subject)
+
+
+# Signin Functions
+
+def check_key_for_login(data: dict):
+    
+    keys = ['email', 'password']
+    
+    for key in data.keys():
+        if not key in keys or len(data) < 2:
+            raise InvalidKeyLoginError(**data)
+
+
+def check_type_for_login(data: dict):
+    
+    email = data.get('email')
+    password = data.get('password')
+    
+    if type(email) != str or type(password) != str:
+        raise InvalidTypeLoginError(**data)
+
+
+def check_password(user: list, data: dict):
+
+    if not user.check_password(data.get('password')):
+        raise IncorrectPasswordError()
+
+
+def check_email_existing(user: list, data: dict):
+
+    if not user:
+        raise EmailNotFoundError(data.get('email'))
