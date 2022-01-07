@@ -7,6 +7,7 @@ from dataclasses import dataclass
 @dataclass
 class PhoneModel(db.Model):
     
+    id: int
     name: str
     phone_number: str
     

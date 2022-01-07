@@ -50,3 +50,25 @@ class InvalidTypePhoneError(Exception):
                     }
 
         super().__init__(self.message)
+
+
+class InvalidAccessPhoneError(Exception):
+
+
+    def __init__(self) -> None:
+        self.message = {
+            "message": "this phone is not yours"
+        }
+
+        super().__init__(self.message)
+
+
+class PhoneIdNotFoundError(Exception):
+
+
+    def __init__(self) -> None:
+        self.message = {
+            "message": "phone_id not found"
+        }
+
+        super().__init__(self.message)
