@@ -1,6 +1,6 @@
 from flask import request, jsonify, current_app
-from app.models.student_subject_model import StudentSubjectModel
 from app.models.subject_model import SubjectModel
+from app.models.student_subject_model import StudentSubjectModel
 
 
 def student_registration_subject(student_id: int):

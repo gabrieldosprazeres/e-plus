@@ -1,5 +1,5 @@
 class InvalidKeyPhoneError(Exception):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         avaliable_keys = ['name', 'phone_number']
         for key in kwargs.keys():
             for avaliable in avaliable_keys:

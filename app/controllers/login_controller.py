@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token
-from app.controllers import check_email_existing, check_key_for_login, check_password, check_type_for_login
 from app.models.student_model import StudentModel
+from app.controllers import check_email_existing, check_key_for_login, check_password, check_type_for_login
 from app.excepetions.login_exception import EmailNotFoundError, IncorrectPasswordError, InvalidKeyLoginError, InvalidTypeLoginError
 
 

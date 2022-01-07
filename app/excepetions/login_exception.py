@@ -1,6 +1,6 @@
 class EmailNotFoundError(Exception):
 
-    def __init__(self, email) -> None:
+    def __init__(self, email: str) -> None:
 
         self.message = {
             "email": f'{email}',

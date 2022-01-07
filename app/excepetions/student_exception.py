@@ -1,5 +1,5 @@
 class InvalidKeyStudentError(Exception):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         avaliable_keys = ['name', 'last_name', 'age', 'grade', 'email', 'password', 'state', 'city', 'district', 'street', 'house_number', 'complement']
         for key in kwargs.keys():
             for avaliable in avaliable_keys:
@@ -154,7 +154,7 @@ class InvalidTypeStudentError(Exception):
 
 
 class InvalidKeyUpdatingError(Exception):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         avaliable_keys = ['name', 'last_name', 'age', 'grade', 'email', 'password']
         for key in kwargs.keys():
             for avaliable in avaliable_keys:
@@ -192,7 +192,7 @@ class InvalidTypeUpdatingError(Exception):
 
 
 class InvalidKeyUpdatingAddressError(Exception):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         avaliable_keys = ['state', 'city', 'district', 'street', 'house_number', 'complement']
         for key in kwargs.keys():
             for avaliable in avaliable_keys:

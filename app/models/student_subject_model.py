@@ -1,8 +1,6 @@
 from app.configs.database import db
 from sqlalchemy import Column, Integer, String, ForeignKey
 from dataclasses import dataclass
-from sqlalchemy.orm import relationship
-from app.models.subject_model import SubjectModel
 
 
 @dataclass
