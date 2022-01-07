@@ -1,6 +1,8 @@
 from flask import current_app
-from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePhoneError
+from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError
 from app.models.address_model import AddressModel
+from app.models.subject_model import SubjectModel
+from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePhoneError
 from app.excepetions import EmailAlreadyExistsError
 from app.excepetions.student_exception import InvalidKeyStudentError, InvalidTypeStudentError
 
@@ -89,3 +91,25 @@ def check_type_for_phone(data: dict):
     
     if type(name) != str or type(phone_number) != str:
         raise InvalidTypePhoneError(**data)
+
+
+def check_subject(data: dict):
+
+    subject = SubjectModel.query.filter_by(subject=data.get('subject')).first()
+
+    if subject:
+        raise SubjectAlreadyExistsError(data.get('subject'))
+
+
+def check_key_for_subject(data: dict):
+    
+    if not 'subject' in data.keys() or len(data) > 1:
+        raise InvalidKeySubjectError(data.get('subject'))
+
+
+def check_type_for_subject(data: dict):
+    
+    subject = data.get('subject')
+    
+    if type(subject) != str:
+        raise InvalidTypeSubjectError(subject)
