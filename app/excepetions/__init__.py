@@ -1,10 +1,34 @@
-class PhoneAlreadyExistsError(Exception):
+class EmailAlreadyExistsError(Exception):
 
 
-    def __init__(self, phone) -> None:
+    def __init__(self, email: str) -> None:
 
         self.message = {
-            'message': f"phone: '{phone}' already exists"
+            'message': f"email: '{email}' already exists"
+        }
+
+        super().__init__(self.message)
+
+
+class PatternEmailError(Exception):
+    def __init__(self, data: dict) -> None:
+        self.message = {
+            'field sent': {
+                'email': f"{data.get('email')}",
+                'message': 'default for email xxxxx@xxxx.xxx or xxxxx@xxxx.xxx.xx'
+            }
+        }
+
+        super().__init__(self.message)
+
+
+class PatternPhoneError(Exception):
+    def __init__(self, data: dict) -> None:
+        self.message = {
+            'field sent': {
+                'phone_number': f"{data.get('phone_number')}",
+                'message': 'default for phone (xx)xxxxx-xxxx'
+            }
         }
 
         super().__init__(self.message)
