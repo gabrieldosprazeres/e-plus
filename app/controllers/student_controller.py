@@ -1,8 +1,11 @@
 from flask import request, jsonify, current_app
-from app.controllers import adding_address, check_email, check_key_for_student, check_type_for_student, format_address
-from app.excepetions import EmailAlreadyExistsError
-from app.excepetions.student_exception import InvalidKeyStudentError, InvalidTypeStudentError
+from flask_jwt_extended import get_jwt_identity
+from app.controllers import adding_address, check_email, check_email_pattern, check_key_for_address, check_key_for_student, check_key_for_updating, check_type_for_address, check_type_for_student, check_type_for_updating, format_address, updating_password
+from app.excepetions import EmailAlreadyExistsError, PatternEmailError
+from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingError, InvalidTypeUpdatingAddressError
+from app.models.address_model import AddressModel
 from app.models.student_model import StudentModel
+from app.models.student_subject_model import StudentSubjectModel
 
 
 def get_all_students():
@@ -24,6 +27,29 @@ def get_all_students():
             } for student in students
         ]
         ), 200
+    
+
+def get_info_student():
+    
+    student: dict = get_jwt_identity()
+    
+    info_student = StudentModel.query.get(student.get('id'))
+    
+    return jsonify(
+        [
+            {
+                'id': info_student.id,
+                'name': info_student.name,
+                'last_name': info_student.last_name,
+                'age': info_student.age,
+                'grade': info_student.grade,
+                'email': info_student.email,
+                'address': info_student.address,
+                'phones': info_student.phones,
+                'subjects': info_student.subjects
+            }
+        ]
+        ), 200
 
 
 def registering_student():
@@ -33,6 +59,7 @@ def registering_student():
         check_key_for_student(data)
         check_type_for_student(data)
         check_email(data, StudentModel)
+        check_email_pattern(data)
         
         address = format_address(data)
         
@@ -50,7 +77,8 @@ def registering_student():
 
     except (
         InvalidKeyStudentError, 
-        InvalidTypeStudentError
+        InvalidTypeStudentError,
+        PatternEmailError
         ) as error:
         return jsonify(error.message), 400
 
@@ -58,3 +86,63 @@ def registering_student():
         return jsonify(error.message), 409
 
     return jsonify(student), 201
+
+
+
+def updating_student():
+    data: dict = request.get_json()
+    student: dict = get_jwt_identity()
+    
+    try:
+        check_key_for_updating(data)
+        check_type_for_updating(data)
+        check_email(data, StudentModel)
+        check_email_pattern(data)
+        updating_password(data)
+        
+        StudentModel.query.filter_by(id=student.get('id')).update(data)
+        
+        current_app.db.session.commit()
+
+    except (
+        InvalidKeyUpdatingError,
+        InvalidTypeUpdatingError,
+        PatternEmailError
+        ) as error:
+        return jsonify(error.message), 400
+
+    except EmailAlreadyExistsError as error:
+        return jsonify(error.message), 409
+    
+    return "", 204
+
+
+def updating_address():
+    data: dict = request.get_json()
+    student: dict = get_jwt_identity()
+
+    try:
+        check_key_for_address(data)
+        check_type_for_address(data)
+
+        AddressModel.query.filter_by(student_id=student.get('id')).update(data)
+        current_app.db.session.commit()
+
+    except (
+        InvalidKeyUpdatingAddressError, 
+        InvalidTypeUpdatingAddressError
+        ) as error:
+        return jsonify(error.message), 400
+
+    return "", 204
+
+
+def deleting_student():
+    
+    student: dict = get_jwt_identity()
+    
+    StudentModel.query.filter_by(id=student.get('id')).delete()
+
+    current_app.db.session.commit()
+    
+    return "", 204

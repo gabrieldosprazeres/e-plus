@@ -151,3 +151,79 @@ class InvalidTypeStudentError(Exception):
             }
 
         super().__init__(self.message)
+
+
+class InvalidKeyUpdatingError(Exception):
+    def __init__(self, **kwargs):
+        avaliable_keys = ['name', 'last_name', 'age', 'grade', 'email', 'password']
+        for key in kwargs.keys():
+            for avaliable in avaliable_keys:
+                if key != avaliable:
+                    self.message = {
+                        'available_keys': [
+                        'name',
+                        'last_name',
+                        'age',
+                        'grade',
+                        'email',
+                        'password'
+                        ]
+                    }
+        super().__init__(self.message)
+
+
+class InvalidTypeUpdatingError(Exception):
+
+
+    def __init__(self) -> None:
+
+        self.message = {
+            'available field': {
+                'name': 'string',
+                'last_name': 'string',
+                'age': 'integer',
+                'grade': 'string',
+                'email': 'string',
+                'password': 'string'
+            }
+        }
+
+        super().__init__(self.message)
+
+
+class InvalidKeyUpdatingAddressError(Exception):
+    def __init__(self, **kwargs):
+        avaliable_keys = ['state', 'city', 'district', 'street', 'house_number', 'complement']
+        for key in kwargs.keys():
+            for avaliable in avaliable_keys:
+                if key != avaliable:
+                    self.message = {
+                        'available_keys': [
+                        'state',
+                        'city',
+                        'district',
+                        'street',
+                        'house_number',
+                        'complement'
+                        ]
+                    }
+        super().__init__(self.message)
+
+
+class InvalidTypeUpdatingAddressError(Exception):
+
+
+    def __init__(self) -> None:
+
+        self.message = {
+            'available field': {
+                'state': 'string',
+                'city': 'string',
+                'district': 'string',
+                'street': 'string',
+                'house_number': 'string',
+                'complement': 'string'
+            }
+        }
+
+        super().__init__(self.message)
