@@ -4,6 +4,20 @@ from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTyp
 from app.models.subject_model import SubjectModel
 
 
+def get_subject_by_id(subject_id: int):
+    
+    subject = SubjectModel.query.filter_by(id=subject_id).all()
+    
+    return jsonify(
+        [
+            {
+                'subject': subject[0].subject,
+                'students': student.student
+            } for student in subject 
+        ]
+        ), 200
+
+
 def creating_subject():
     data = request.get_json()
     
