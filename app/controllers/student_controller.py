@@ -18,7 +18,8 @@ def get_all_students():
                 'age': student.age,
                 'grade': student.grade,
                 'email': student.email,
-                'address': student.address
+                'address': student.address,
+                'phones': student.phones
             } for student in students
         ]
         ), 200
