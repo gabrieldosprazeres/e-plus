@@ -1,6 +1,6 @@
 from flask import current_app
 from app.models.address_model import AddressModel
-# from app.excepetions import PhoneAlreadyExistsError
+from app.excepetions import EmailAlreadyExistsError
 from app.excepetions.student_exception import InvalidKeyStudentError, InvalidTypeStudentError
 
 
@@ -13,12 +13,12 @@ def check_key_for_student(data: dict):
             raise InvalidKeyStudentError(**data)
 
 
-# def check_phone(data: dict, model):
+def check_email(data: dict, model):
 
-#     phone = model.query.filter_by(phone=data.get('phone')).first()
+    email = model.query.filter_by(email=data.get('email')).first()
 
-#     if phone:
-#         raise PhoneAlreadyExistsError(data.get('phone'))
+    if email:
+        raise EmailAlreadyExistsError(data.get('email'))
 
 
 def check_type_for_student(data: dict):

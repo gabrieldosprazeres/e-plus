@@ -2,7 +2,6 @@ class InvalidKeyStudentError(Exception):
     def __init__(self, **kwargs):
         avaliable_keys = ['name', 'last_name', 'age', 'grade', 'email', 'password', 'state', 'city', 'district', 'street', 'house_number', 'complement']
         for key in kwargs.keys():
-            # if key != 'name' or key != 'last_name' or key != 'age' or key != 'grade' or key != 'email' or key != 'password' or key != 'state' or key != 'city' or key != 'district' or key != 'street' or key != 'house_number' or key != 'complement':
             for avaliable in avaliable_keys:
                 if key != avaliable:
                     self.message = {

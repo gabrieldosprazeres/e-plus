@@ -1,5 +1,6 @@
 from flask import request, jsonify, current_app
-from app.controllers import adding_address, check_key_for_student, check_type_for_student, format_address
+from app.controllers import adding_address, check_email, check_key_for_student, check_type_for_student, format_address
+from app.excepetions import EmailAlreadyExistsError
 from app.excepetions.student_exception import InvalidKeyStudentError, InvalidTypeStudentError
 from app.models.student_model import StudentModel
 
@@ -29,6 +30,7 @@ def registering_student():
     try:
         check_key_for_student(data)
         check_type_for_student(data)
+        check_email(data, StudentModel)
         
         address = format_address(data)
         
@@ -49,5 +51,8 @@ def registering_student():
         InvalidTypeStudentError
         ) as error:
         return jsonify(error.message), 400
+
+    except EmailAlreadyExistsError as error:
+        return jsonify(error.message), 409
 
     return jsonify(student), 201
