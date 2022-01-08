@@ -3,8 +3,8 @@ from flask_jwt_extended import get_jwt_identity
 from app.models.address_model import AddressModel
 from app.models.student_model import StudentModel
 from app.excepetions import EmailAlreadyExistsError, PatternEmailError
-from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingError, InvalidTypeUpdatingAddressError
-from app.controllers import adding_address, check_email, check_email_pattern, check_key_for_address, check_key_for_student, check_key_for_updating, check_type_for_address, check_type_for_student, check_type_for_updating, format_address, updating_password
+from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingError, InvalidTypeUpdatingAddressError, StudentNotFoundError
+from app.controllers import adding_address, check_email, check_email_pattern, check_key_for_address, check_key_for_student, check_key_for_updating, check_student_id, check_type_for_address, check_type_for_student, check_type_for_updating, format_address, updating_password
 
 
 def get_all_students():
@@ -46,6 +46,32 @@ def get_info_student():
                 'address': info_student.address,
                 'phones': info_student.phones,
                 'subjects': info_student.subjects
+            }
+        ]
+        ), 200
+
+
+def get_filter_by_id(student_id: int):
+    
+    try:
+
+        student = check_student_id(student_id, StudentModel)
+    
+    except StudentNotFoundError as error:
+        return jsonify(error.message), 404
+    
+    return jsonify(
+        [
+            {
+                'id': student.id,
+                'name': student.name,
+                'last_name': student.last_name,
+                'age': student.age,
+                'grade': student.grade,
+                'email': student.email,
+                'address': student.address,
+                'phones': student.phones,
+                'subjects': student.subjects
             }
         ]
         ), 200
