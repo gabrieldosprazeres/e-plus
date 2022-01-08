@@ -46,3 +46,25 @@ class InvalidTypeSubjectError(Exception):
             }
 
         super().__init__(self.message)
+
+
+class SubjectIdNotFoundError(Exception):
+
+
+    def __init__(self) -> None:
+        self.message = {
+            "message": "subject_id not found"
+        }
+
+        super().__init__(self.message)
+
+
+class SubjectNotFoundError(Exception):
+
+
+    def __init__(self, subject: str) -> None:
+        self.message = {
+            "message": f"subject '{subject}' not found"
+        }
+
+        super().__init__(self.message)

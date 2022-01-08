@@ -30,7 +30,7 @@ def creating_phone_number():
         ) as error:
         return jsonify(error.message), 400
 
-    return jsonify(phone), 200
+    return jsonify(phone), 201
 
 
 def updating_phone(phone_id: int):
@@ -38,6 +38,7 @@ def updating_phone(phone_id: int):
     student: dict = get_jwt_identity()
 
     try:
+        check_phone_pattern(data)
         check_phone_id(phone_id, PhoneModel)
 
         info_student = StudentModel.query.get(student.get('id'))
