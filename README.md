@@ -6,7 +6,14 @@
 
 ### Objetivo
 
-E-Plus, API criada para gerenciar estudantes. Conta com registro do estudante, atualização do aluno cadastrado, deleção do cadastro e obtenção de todos os alunos cadastrados.
+E-Plus, API criada para gerenciar estudantes.
+Conta com registro do estudante, atualização do aluno cadastrado, deleção do cadastro e obtenção de todos os alunos cadastrados.
+
+#
+
+## Link da API hospedada no Heroku
+
+- [E-Plus](https://e-plus-school.herokuapp.com/api).
 
 #
 
@@ -37,6 +44,7 @@ $ pip install -r requirements.txt
 - Configure suas variáveis seguindo o `.env.example`
 
   - Não esqueça de criar o seu banco de dados e adicionar no .env
+  - Banco de dados utilizado: PostgreSQL com ORM SQLAlchemy
 
 - Crie as tabelas no banco de dados através do comando
 
@@ -65,7 +73,7 @@ $ flask run
 
 ## Documentação das rotas e retornos
 
-Você pode acessar a documentação das rotas clicando em [Doc API](https://google.com.br)
+Você pode acessar a documentação das rotas clicando em [Doc API](https://documenter.getpostman.com/view/18794559/UVXerHjv)
 
 #
 
