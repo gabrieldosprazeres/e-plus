@@ -227,3 +227,14 @@ class InvalidTypeUpdatingAddressError(Exception):
         }
 
         super().__init__(self.message)
+
+
+class StudentNotFoundError(Exception):
+
+
+    def __init__(self) -> None:
+        self.message = {
+            'message': 'student_id not found'
+        }
+
+        super().__init__(self.message)

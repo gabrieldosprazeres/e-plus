@@ -8,7 +8,7 @@ from app.excepetions import EmailAlreadyExistsError, PatternEmailError, PatternP
 from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError, SubjectIdNotFoundError, SubjectNotFoundError
 from app.excepetions.login_exception import IncorrectPasswordError, InvalidKeyLoginError, InvalidTypeLoginError, EmailNotFoundError
 from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePhoneError, InvalidAccessPhoneError, PhoneIdNotFoundError
-from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingAddressError, InvalidTypeUpdatingError
+from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingAddressError, InvalidTypeUpdatingError, StudentNotFoundError
 
 
 # Student Functions
@@ -100,6 +100,16 @@ def check_email_pattern(data: dict):
     
         if not email:
             raise PatternEmailError(data)
+
+
+def check_student_id(student_id: int, model: object):
+
+    student = model.query.get(student_id)
+    
+    if not student:
+        raise StudentNotFoundError
+
+    return student
 
 
 # Phone Functions
