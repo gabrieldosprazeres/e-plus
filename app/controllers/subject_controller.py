@@ -1,12 +1,18 @@
 from flask import request, jsonify, current_app
 from app.models.subject_model import SubjectModel
-from app.controllers import check_key_for_subject, check_subject, check_type_for_subject
-from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError
+from app.controllers import check_key_for_subject, check_subject, check_subject_id, check_type_for_subject
+from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError, SubjectIdNotFoundError
 
 
 def get_subject_by_id(subject_id: int):
     
-    subject = SubjectModel.query.filter_by(id=subject_id).all()
+    try:
+        check_subject_id(subject_id, SubjectModel)
+
+        subject = SubjectModel.query.filter_by(id=subject_id).all()
+    
+    except SubjectIdNotFoundError as error:
+        return jsonify(error.message), 404
     
     return jsonify(
         [

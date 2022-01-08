@@ -1,10 +1,11 @@
 from flask import current_app
 from re import fullmatch, compile
+from app.excepetions.student_subject_exception import InvalidKeySubjectRegisterError, InvalidTypeSubjectRegisterError
 from app.models.address_model import AddressModel
 from app.models.subject_model import SubjectModel
 from werkzeug.security import generate_password_hash
 from app.excepetions import EmailAlreadyExistsError, PatternEmailError, PatternPhoneError
-from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError
+from app.excepetions.subject_exception import InvalidKeySubjectError, InvalidTypeSubjectError, SubjectAlreadyExistsError, SubjectIdNotFoundError, SubjectNotFoundError
 from app.excepetions.login_exception import IncorrectPasswordError, InvalidKeyLoginError, InvalidTypeLoginError, EmailNotFoundError
 from app.excepetions.phone_exception import InvalidKeyPhoneError, InvalidTypePhoneError, InvalidAccessPhoneError, PhoneIdNotFoundError
 from app.excepetions.student_exception import InvalidKeyStudentError, InvalidKeyUpdatingAddressError, InvalidKeyUpdatingError, InvalidTypeStudentError, InvalidTypeUpdatingAddressError, InvalidTypeUpdatingError
@@ -178,6 +179,35 @@ def check_type_for_subject(data: dict):
     
     if type(subject) != str:
         raise InvalidTypeSubjectError(subject)
+    
+
+def check_subject_id(subject_id: int, model):
+    
+    subject = model.query.filter_by(id=subject_id).first()
+    
+    if not subject:
+        raise SubjectIdNotFoundError
+
+
+def check_subject_existing(subject: dict, subject_name: str):
+    
+    if not subject:
+        raise SubjectNotFoundError(subject_name)
+
+
+def check_key_for_subject_register(data: dict):
+    
+    if not 'subject' in data.keys() or not 'time_course' in data.keys() or len(data) > 2:
+        raise InvalidKeySubjectRegisterError
+
+
+def check_type_for_subject_register(data: dict):
+    
+    subject = data.get('subject')
+    time_course = data.get('time_course')
+    
+    if type(subject) != str or type(time_course) != str:
+        raise InvalidTypeSubjectRegisterError(subject, time_course)
 
 
 # Signin Functions
