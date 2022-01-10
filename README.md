@@ -81,7 +81,7 @@ Você pode acessar a documentação das rotas clicando em [Doc API](https://docu
 
 - Python
 - Flask
-- Postgre
+- Postgres
 - SQLAlchemy
 
 #
