@@ -77,6 +77,15 @@ Você pode acessar a documentação das rotas clicando em [Doc API](https://docu
 
 #
 
+## Tecnologias Utilizadas:
+
+- Python
+- Flask
+- Postgre
+- SQLAlchemy
+
+#
+
 ## Projeto desenvolvido por:
 
 - [Gabriel dos Prazeres](https://www.linkedin.com/in/gabrieldosprazeres/)
